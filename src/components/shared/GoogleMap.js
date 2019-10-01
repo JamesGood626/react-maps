@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import GoogleMapReact from 'google-map-react'
+import { GOOGLE_KEY } from '../../secrets'
 
 export default function GoogleMap({center}) {
     const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -15,7 +16,7 @@ export default function GoogleMap({center}) {
     return (
         <div style={{ height: '75vh', width: '50%' }}>
             <GoogleMapReact
-            bootstrapURLKeys={{ key: 'AIzaSyC1vM_i3LrNhL1pFrXvw4iP2BX7X8dETC8' }}
+            bootstrapURLKeys={{ key: GOOGLE_KEY }}
             center={center}
             zoom={15}
             >
