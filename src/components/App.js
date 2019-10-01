@@ -1,11 +1,17 @@
 import React from "react";
-import Home from "./pages/home";
+import { BrowserRouter as Router, Redirect, withRouter } from 'react-router-dom'
+import { useAuth } from "../hooks/queries/useAuth";
+import Routes from './shared/routes'
+
+
 
 function App() {
+  const { currentUser } = useAuth();
+
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <Router>
+      <Routes currentUser = {currentUser} />
+    </Router>
   );
 }
 

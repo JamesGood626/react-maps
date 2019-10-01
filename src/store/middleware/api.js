@@ -31,11 +31,38 @@ const makeRequest = (
   }
 };
 
+const makeLocationRequest = (
+  dispatch,
+  { payload },
+  { method, url, onSuccess, onError }
+) => {
+  dispatchToggleLoader(dispatch, true, {method, url})
+    return navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log("post success response! ", position);
+        dispatchToggleLoader(dispatch, false, { method, url });
+        console.log("the success data: ", position);
+        onSuccess({
+          center: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }
+        });
+      }, (error) => {
+        onError({ error })
+      }
+    )
+}
+
 export const apiMiddleware = ({ dispatch }) => next => action => {
   console.log("Inside the middleware w/ action: ", action);
   if (action.type === API_REQUEST) {
     console.log("action.type === API_REQUEST");
     return makeRequest(dispatch, action, action.meta);
+  }
+  if (action.type === 'LOCATION_REQUEST'){
+    console.log("action.type === LOCATION_REQUEST")
+    return makeLocationRequest(dispatch, action, action.meta)
   }
   console.log("calling next(action) in middleware");
   next(action);

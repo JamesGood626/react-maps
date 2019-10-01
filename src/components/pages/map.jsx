@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/queries/useAuth";
 import { useLocation } from "../../hooks/queries/useLocation";
 import { useUiActions } from "../../hooks/commands/useUiActions";
 import { useLocationActions } from "../../hooks/commands/getLocationActions"
-import AuthForm from "../shared/authForm";
+import GoogleMap from "../shared/GoogleMap"
 
 // Info needed for creating event:
 // name
@@ -20,7 +20,7 @@ import AuthForm from "../shared/authForm";
 // initialComment
 // eventDate <- will be retrieved via JavaScript (current time)
 
-export default function Home() {
+export default function Map() {
   const { loading } = useUi();
   const { currentUser } = useAuth();
   const { center } = useLocation();
@@ -41,12 +41,13 @@ export default function Home() {
 
   useEffect(() => {
     toggleLoaderFalse();
+    getLocation();
   }, []);
-  console.log("this is from useLocation(): ", center)
+  console.log(currentUser)
+  
     return (
       <div>
-        <h1>Home</h1>
-        {loading ? "Submitting..." : <AuthForm />}
+        <GoogleMap center={center}/>
       </div>
     );
 }
