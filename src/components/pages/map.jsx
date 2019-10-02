@@ -48,20 +48,17 @@ export default function Map() {
     toggleLoaderFalse();
     getLocation();
   }, []);
-
-  const handleOpenModal = () => {
-    toggleModalTrue()
-  }
-
-  const handleCloseModal = () => {
-    toggleModalFalse()
-  }
   
-    return (
-      <div>
-        <GoogleMap center={center}/>
-        <EventFormModal toggle_modal={toggle_modal} handleClose={handleCloseModal} />
-        <button type='button' onClick={handleOpenModal}>Click</button>
-      </div>
-    );
+  return (
+    // TODO:
+    // Just styling modal for now... But we'll have two separate modals
+    // 1. To create an event
+    // 2. To list the details of a single event.
+    // We'll need to provide additional data in the modalReducer to determine which
+    // modal should appear.
+    <div>
+      <GoogleMap center={center} handleOpenModal={toggleModalTrue}/>
+      <EventFormModal toggle_modal={toggle_modal} handleCloseModal={toggleModalFalse} />
+    </div>
+  );
 }
