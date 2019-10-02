@@ -14,7 +14,7 @@ export default function GoogleMap({center}) {
     // }
     // console.log(typeof lng)
     return (
-        <div style={{ height: '75vh', width: '50%' }}>
+        <div style={{ height: '75vh', width: '75%' }}>
             <GoogleMapReact
             bootstrapURLKeys={{ key: GOOGLE_KEY }}
             center={center}

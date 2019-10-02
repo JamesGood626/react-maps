@@ -42,6 +42,12 @@ export default function Home() {
   useEffect(() => {
     toggleLoaderFalse();
   }, []);
+
+  useEffect(() => {
+    return () => {console.log('inside home', currentUser)}
+  }, [])
+
+  
   console.log("this is from useLocation(): ", center)
     return (
       <div>

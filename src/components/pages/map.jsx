@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import { useUi } from "../../hooks/queries/useUi";
 import { useAuth } from "../../hooks/queries/useAuth";
 import { useLocation } from "../../hooks/queries/useLocation";
+import { useModal } from "../../hooks/queries/useModal";
 import { useUiActions } from "../../hooks/commands/useUiActions";
 import { useLocationActions } from "../../hooks/commands/getLocationActions"
+import { useModalActions } from "../../hooks/commands/useModalActions"
 import GoogleMap from "../shared/GoogleMap"
+import EventFormModal from '../shared/eventFormModal'
 
 // Info needed for creating event:
 // name
@@ -24,7 +27,9 @@ export default function Map() {
   const { loading } = useUi();
   const { currentUser } = useAuth();
   const { center } = useLocation();
+  const { toggle_modal } = useModal();
   const { toggleLoaderTrue, toggleLoaderFalse } = useUiActions();
+  const { toggleModalTrue, toggleModalFalse } = useModalActions();
   const { getLocation } = useLocationActions()
   
 
@@ -43,11 +48,20 @@ export default function Map() {
     toggleLoaderFalse();
     getLocation();
   }, []);
-  console.log(currentUser)
+
+  const handleOpenModal = () => {
+    toggleModalTrue()
+  }
+
+  const handleCloseModal = () => {
+    toggleModalFalse()
+  }
   
     return (
       <div>
         <GoogleMap center={center}/>
+        <EventFormModal toggle_modal={toggle_modal} handleClose={handleCloseModal} />
+        <button type='button' onClick={handleOpenModal}>Click</button>
       </div>
     );
 }

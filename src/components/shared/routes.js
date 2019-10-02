@@ -5,7 +5,6 @@ import Map from "../pages/map"
 
 
 function Routes({ currentUser }) {
-  console.log("in routes ", currentUser)
   return (
     <Route exact path="/">
       {currentUser ? <Map /> : <Home />}
