@@ -4,14 +4,15 @@ import { useAuth } from "../../hooks/queries/useAuth";
 import { useLocation } from "../../hooks/queries/useLocation";
 import { useModal } from "../../hooks/queries/useModal";
 import { useUiActions } from "../../hooks/commands/useUiActions";
-import { useLocationActions } from "../../hooks/commands/getLocationActions"
-import { useModalActions } from "../../hooks/commands/useModalActions"
-import GoogleMap from "../shared/GoogleMap"
-import EventFormModal from '../shared/eventFormModal'
+import { useLocationActions } from "../../hooks/commands/useLocationActions";
+import { useModalActions } from "../../hooks/commands/useModalActions";
+import GoogleMap from "../shared/GoogleMap";
+import EventFormModal from "../shared/eventFormModal";
+import axios from "axios";
 
 // Info needed for creating event:
 // name
-// address: { 
+// address: {
 //   street,
 //   city,
 //   state,
@@ -30,8 +31,7 @@ export default function Map() {
   const { toggle_modal } = useModal();
   const { toggleLoaderTrue, toggleLoaderFalse } = useUiActions();
   const { toggleModalTrue, toggleModalFalse } = useModalActions();
-  const { getLocation } = useLocationActions()
-  
+  const { getLocation } = useLocationActions();
 
   // useEffect(() => {
   //   const interval = setInterval(function() {
@@ -45,10 +45,17 @@ export default function Map() {
   // }, [loading]);
 
   useEffect(() => {
+    // TODO: remove,
+    // but this was the request used to quickly test that axios is sending the cookie
+    // along with the request.
+    // const result = await axios.post("http://localhost:4000/api/events/test", {
+    //   payload: { message: "Data on the request" }
+    // });
+    // console.log("the result of POST /api/events/test: ", result);
     toggleLoaderFalse();
     getLocation();
   }, []);
-  
+
   return (
     // TODO:
     // Just styling modal for now... But we'll have two separate modals
@@ -57,8 +64,11 @@ export default function Map() {
     // We'll need to provide additional data in the modalReducer to determine which
     // modal should appear.
     <div>
-      <GoogleMap center={center} handleOpenModal={toggleModalTrue}/>
-      <EventFormModal toggle_modal={toggle_modal} handleCloseModal={toggleModalFalse} />
+      <GoogleMap center={center} handleOpenModal={toggleModalTrue} />
+      <EventFormModal
+        toggle_modal={toggle_modal}
+        handleCloseModal={toggleModalFalse}
+      />
     </div>
   );
 }
