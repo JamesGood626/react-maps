@@ -74,7 +74,10 @@ const initialEventDataState = {
 //   ...rest
 // });
 
-export default function EventFormModal({ handleCloseModal, toggle_modal }) {
+export default function EventFormModal({
+  handleCloseModal,
+  createEventModalVisible
+}) {
   const { createEvent } = useEventActions();
   const [eventData, setEventData] = useState(initialEventDataState);
   const dateRef = useRef(null);
@@ -102,7 +105,9 @@ export default function EventFormModal({ handleCloseModal, toggle_modal }) {
     createEvent(eventData);
   };
 
-  const showHideClassname = toggle_modal ? "display-block" : "display-none";
+  const showHideClassname = createEventModalVisible
+    ? "display-block"
+    : "display-none";
 
   return (
     <>

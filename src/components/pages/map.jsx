@@ -1,14 +1,28 @@
 import React, { useEffect } from "react";
+import axios from "axios";
+import styled from "styled-components";
 import { useUi } from "../../hooks/queries/useUi";
 import { useAuth } from "../../hooks/queries/useAuth";
 import { useLocation } from "../../hooks/queries/useLocation";
 import { useModal } from "../../hooks/queries/useModal";
+import { useEvents } from "../../hooks/queries/useEvents";
 import { useUiActions } from "../../hooks/commands/useUiActions";
 import { useLocationActions } from "../../hooks/commands/useLocationActions";
 import { useModalActions } from "../../hooks/commands/useModalActions";
 import GoogleMap from "../shared/GoogleMap";
 import EventFormModal from "../shared/eventFormModal";
-import axios from "axios";
+
+const Container = styled.div`
+  position: relative;
+
+  #create-event--btn {
+    position: absolute;
+    bottom: 4%;
+    left: 4%;
+    padding: 1rem;
+    background: #fcfcfc;
+  }
+`;
 
 // Info needed for creating event:
 // name
@@ -28,10 +42,16 @@ export default function Map() {
   const { loading } = useUi();
   const { currentUser } = useAuth();
   const { center } = useLocation();
-  const { toggle_modal } = useModal();
-  const { toggleLoaderTrue, toggleLoaderFalse } = useUiActions();
-  const { toggleModalTrue, toggleModalFalse } = useModalActions();
+  const { events } = useEvents();
+  const { createEventModalVisible, eventDetailsModalVisible } = useModal();
   const { getLocation } = useLocationActions();
+  const { toggleLoaderTrue, toggleLoaderFalse } = useUiActions();
+  const {
+    showCreateEventModal,
+    hideCreateEventModal,
+    showEventDetailsModal,
+    hideEventDetailsModal
+  } = useModalActions();
 
   // useEffect(() => {
   //   const interval = setInterval(function() {
@@ -45,6 +65,7 @@ export default function Map() {
   // }, [loading]);
 
   useEffect(() => {
+    console.log("got events: ", events);
     // TODO: remove,
     // but this was the request used to quickly test that axios is sending the cookie
     // along with the request.
@@ -63,12 +84,16 @@ export default function Map() {
     // 2. To list the details of a single event.
     // We'll need to provide additional data in the modalReducer to determine which
     // modal should appear.
-    <div>
-      <GoogleMap center={center} handleOpenModal={toggleModalTrue} />
+    <Container>
+      <GoogleMap center={center} handleOpenModal={showEventDetailsModal} />
+      <button id="create-event--btn" onClick={showCreateEventModal}>
+        Create an Event!
+      </button>
       <EventFormModal
-        toggle_modal={toggle_modal}
-        handleCloseModal={toggleModalFalse}
+        createEventModalVisible={createEventModalVisible}
+        handleCloseModal={hideCreateEventModal}
       />
-    </div>
+      {/* <EventDetailsModal /> */}
+    </Container>
   );
 }

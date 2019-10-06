@@ -26,7 +26,7 @@ export const createEvent = dispatch => eventData => {
   );
 };
 
-export const createEventSucess = dispatch => (event) => {
+export const createEventSucess = dispatch => event => {
   console.log("the Event in createEventSuccess: ", event);
   dispatch(setEvent(event));
 };

@@ -13,11 +13,11 @@ axios.defaults.withCredentials = true;
 function App() {
   const { currentUser } = useAuth();
 
-  useEffect(() => {
-    if (currentUser !== null) {
-      localStorage.setItem("currentUser", currentUser);
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser !== null) {
+  //     localStorage.setItem("currentUser", currentUser);
+  //   }
+  // }, [currentUser]);
 
   return (
     <Router>

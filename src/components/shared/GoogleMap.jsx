@@ -38,9 +38,7 @@ const Pin = styled.div`
 `;
 
 export default function GoogleMap({ center, handleOpenModal }) {
-  const MapPin = () => (
-    <Pin onClick={() => handleOpenModal()} />
-  );
+  const MapPin = () => <Pin onClick={() => handleOpenModal()} />;
 
   // const defaultProps = {
   //     center: {
@@ -57,7 +55,8 @@ export default function GoogleMap({ center, handleOpenModal }) {
         center={center}
         zoom={15}
       >
-        <MapPin center={center} lat={40.7600473} lng={-73.9911963} />
+        <MapPin lat={40.7600473} lng={-73.9911963} />
+        <MapPin lat={59.955413} lng={30.337844} />
       </GoogleMapReact>
     </div>
   );

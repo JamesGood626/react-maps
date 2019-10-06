@@ -1,23 +1,52 @@
 import { useDispatch } from "react-redux";
-import { toggleModal } from "../../store/actions/modal";
+import {
+  toggleCreateEventModal,
+  toggleEventDetailsModal
+} from "../../store/actions/modal";
 
 export function useModalActions() {
   const dispatch = useDispatch();
 
-  const toggleModalTrue = () => {
-    console.log("dispatching toggleModalTrue w/ modalVisible: true");
+  const showCreateEventModal = () => {
     dispatch(
-      toggleModal({
-        modalVisible: true,
-        trigger: "Dispatching toggleModalTrue"
+      toggleCreateEventModal({
+        createEventModalVisible: true,
+        trigger: "Dispatching showCreateEventModal"
       })
     );
   };
 
-  const toggleModalFalse = () => {
-    console.log("dispatching toggleLoader w/ loaderVisible: false");
-    dispatch(toggleModal({ trigger: "Dispatching toggleModalFalse" }));
+  const hideCreateEventModal = () => {
+    dispatch(
+      toggleCreateEventModal({
+        createEventModalVisible: false,
+        trigger: "Dispatching hideCreateEventModal"
+      })
+    );
   };
 
-  return { toggleModalTrue, toggleModalFalse };
+  const showEventDetailsModal = () => {
+    dispatch(
+      toggleEventDetailsModal({
+        eventDetailsModalMisible: true,
+        trigger: "Dispatching showEventDetailsModal"
+      })
+    );
+  };
+
+  const hideEventDetailsModal = () => {
+    dispatch(
+      toggleEventDetailsModal({
+        eventDetailsModalMisible: false,
+        trigger: "Dispatching hideEventDetailsModal"
+      })
+    );
+  };
+
+  return {
+    showCreateEventModal,
+    hideCreateEventModal,
+    showEventDetailsModal,
+    hideEventDetailsModal
+  };
 }
