@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
+import { useEvents } from "../../hooks/queries/useEvents";
 import { GOOGLE_KEY } from "../../secrets";
 import styled from "styled-components";
 
@@ -38,7 +39,16 @@ const Pin = styled.div`
 `;
 
 export default function GoogleMap({ center, handleOpenModal }) {
-  const MapPin = () => <Pin onClick={() => handleOpenModal()} />;
+  const { events } = useEvents();
+
+  const MapPin = ({ defaultPosition, event }) => (
+    // TODO:
+    // Pass in eventId of the particular event to the handleOpenModal function
+    // so that you may update the currentlyViewedEvent in redux state with data from
+    // an API request to fetch the event + comments so that it may be accessible
+    // from the modal that displayed an Event's details.
+    <Pin defaultPosition={defaultPosition} onClick={() => handleOpenModal()} />
+  );
 
   // const defaultProps = {
   //     center: {
@@ -55,8 +65,21 @@ export default function GoogleMap({ center, handleOpenModal }) {
         center={center}
         zoom={15}
       >
-        <MapPin lat={40.7600473} lng={-73.9911963} />
-        <MapPin lat={59.955413} lng={30.337844} />
+        {events.map(event => {
+          console.log("this is event: ", event);
+          const {
+            data: {
+              location: {
+                coordinates: [lat, lng]
+              }
+            }
+          } = event;
+          return (
+            <MapPin defaultPosition={{ lat: lat, lng: lng }} event={event} />
+          );
+        })}
+        {/* <MapPin lat={40.7600473} lng={-73.9911963} />
+        <MapPin lat={59.955413} lng={30.337844} /> */}
       </GoogleMapReact>
     </div>
   );

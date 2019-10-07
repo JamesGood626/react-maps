@@ -5,7 +5,6 @@ import { useUi } from "../../hooks/queries/useUi";
 import { useAuth } from "../../hooks/queries/useAuth";
 import { useLocation } from "../../hooks/queries/useLocation";
 import { useModal } from "../../hooks/queries/useModal";
-import { useEvents } from "../../hooks/queries/useEvents";
 import { useUiActions } from "../../hooks/commands/useUiActions";
 import { useLocationActions } from "../../hooks/commands/useLocationActions";
 import { useModalActions } from "../../hooks/commands/useModalActions";
@@ -42,7 +41,6 @@ export default function Map() {
   const { loading } = useUi();
   const { currentUser } = useAuth();
   const { center } = useLocation();
-  const { events } = useEvents();
   const { createEventModalVisible, eventDetailsModalVisible } = useModal();
   const { getLocation } = useLocationActions();
   const { toggleLoaderTrue, toggleLoaderFalse } = useUiActions();
@@ -65,7 +63,6 @@ export default function Map() {
   // }, [loading]);
 
   useEffect(() => {
-    console.log("got events: ", events);
     // TODO: remove,
     // but this was the request used to quickly test that axios is sending the cookie
     // along with the request.
