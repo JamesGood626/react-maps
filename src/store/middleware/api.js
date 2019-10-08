@@ -29,6 +29,25 @@ const makeRequest = (
         onError({ error });
       });
   }
+  if (method === "GET"){
+    dispatchToggleLoader(dispatch, true, {method, url})
+    return axios
+      .get(`${API_URL}${url}`, {
+        params: {
+          lat: payload.lat,
+          lng: payload.lng
+        }
+      })
+      .then(function(response){
+        console.log("get success response! ", response);
+        dispatchToggleLoader(dispatch, false, { method, url });
+        console.log("the success data: ", response.data);
+        onSuccess(response.data);
+      })
+      .catch(function(error){
+        onError({error})
+      })
+  }
 };
 
 const makeLocationRequest = (

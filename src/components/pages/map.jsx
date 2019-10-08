@@ -8,6 +8,8 @@ import { useModal } from "../../hooks/queries/useModal";
 import { useUiActions } from "../../hooks/commands/useUiActions";
 import { useLocationActions } from "../../hooks/commands/useLocationActions";
 import { useModalActions } from "../../hooks/commands/useModalActions";
+import { useListActions } from "../../hooks/commands/useListActions"
+import { useList } from "../../hooks/queries/useList"
 import GoogleMap from "../shared/GoogleMap";
 import EventFormModal from "../shared/eventFormModal";
 
@@ -44,6 +46,8 @@ export default function Map() {
   const { createEventModalVisible, eventDetailsModalVisible } = useModal();
   const { getLocation } = useLocationActions();
   const { toggleLoaderTrue, toggleLoaderFalse } = useUiActions();
+  const { listEvent } = useListActions();
+  const { list } = useList()
   const {
     showCreateEventModal,
     hideCreateEventModal,
@@ -74,6 +78,11 @@ export default function Map() {
     getLocation();
   }, []);
 
+  useEffect(() => {
+    console.log(center)
+    listEvent(center)
+  }, [center])
+
   return (
     // TODO:
     // Just styling modal for now... But we'll have two separate modals
@@ -82,7 +91,7 @@ export default function Map() {
     // We'll need to provide additional data in the modalReducer to determine which
     // modal should appear.
     <Container>
-      <GoogleMap center={center} handleOpenModal={showEventDetailsModal} />
+      <GoogleMap center={center} list={list} handleOpenModal={showEventDetailsModal} />
       <button id="create-event--btn" onClick={showCreateEventModal}>
         Create an Event!
       </button>

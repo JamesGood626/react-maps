@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { apiRequest } from "../../store/actions/api";
-import { setEvent, setCreateEventError } from "../../store/actions/events";
-import { EVENT_URL } from "../../APIEndpoints";
+import { getEventList, getEventListError } from "../../store/actions/list";
+import { LIST_URL } from "../../APIEndpoints";
 
 // NOTE:
 // Had to break out the action dispatcher helper functions from outside of useAuthActions
@@ -13,35 +13,34 @@ import { EVENT_URL } from "../../APIEndpoints";
 //     2. You might be breaking the Rules of Hooks
 //     3. You might have more than one copy of React in the same app
 //     See https://fb.me/react-invalid-hook-call for tips about how to debug and fix this problem.
-export const createEvent = dispatch => eventData => {
-  console.log("eventData: ", eventData);
+
+export const listEvent = dispatch => center => {
+  console.log('center: ', center)
   dispatch(
     apiRequest({
-      method: "POST",
-      url: EVENT_URL,
-      payload: eventData,
-      onSuccess: createEventSucess(dispatch),
-      onError: createEventError(dispatch)
+      method: "GET",
+      url: LIST_URL,
+      payload: center,
+      onSuccess: listEventSuccess(dispatch),
+      onError: listEventError(dispatch)
     })
-  );
-};
+  )
+}
 
+export const listEventSuccess = dispatch => events => {
+  console.log("Events in listEventSuccess: ", events)
+  dispatch(getEventList(events))
+}
 
-export const createEventSucess = dispatch => event => {
-  console.log("the Event in createEventSuccess: ", event);
-  dispatch(setEvent(event));
-};
+export const listEventError = dispatch => ({error}) => {
+    console.log("inside listEventError", error)
+    dispatch(getEventListError({error}))
+}
 
-const createEventError = dispatch => ({ error }) => {
-  console.log("inside createEventError", error);
-  dispatch(setCreateEventError({ error }));
-};
-
-
-export function useEventActions() {
+export function useListActions() {
   const dispatch = useDispatch();
 
   return {
-    createEvent: createEvent(dispatch)
+    listEvent: listEvent(dispatch)
   };
 }

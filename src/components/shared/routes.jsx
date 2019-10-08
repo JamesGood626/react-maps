@@ -4,9 +4,9 @@ import Home from "../pages/home";
 import Map from "../pages/map";
 
 function Routes({ currentUser }) {
-  if (!currentUser) {
-    return <Redirect to="/" />;
-  }
+  // if (!currentUser) {
+  //   return <Redirect to="/" />;
+  // }
 
   return (
     <>
