@@ -12,6 +12,7 @@ import { useListActions } from "../../hooks/commands/useListActions"
 import { useList } from "../../hooks/queries/useList"
 import GoogleMap from "../shared/GoogleMap";
 import EventFormModal from "../shared/eventFormModal";
+import EventDetailModal from "../shared/eventDetailModal"
 
 const Container = styled.div`
   position: relative;
@@ -98,6 +99,10 @@ export default function Map() {
       <EventFormModal
         createEventModalVisible={createEventModalVisible}
         handleCloseModal={hideCreateEventModal}
+      />
+      <EventDetailModal
+        eventDetailsModalVisible={eventDetailsModalVisible}
+        hideEventDetailsModal={hideEventDetailsModal}
       />
       {/* <EventDetailsModal /> */}
     </Container>

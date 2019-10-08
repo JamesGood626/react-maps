@@ -11,10 +11,11 @@ export const toggleCreateEventModal = ({
 });
 
 export const toggleEventDetailsModal = ({
+  event = {},
   eventDetailsModalVisible = false,
   trigger
 }) => ({
   type: TOGGLE_EVENT_DETAILS_MODAL,
-  payload: { eventDetailsModalVisible },
+  payload: { event, eventDetailsModalVisible },
   meta: { trigger }
 });

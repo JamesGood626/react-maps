@@ -25,10 +25,11 @@ export function useModalActions() {
     );
   };
 
-  const showEventDetailsModal = () => {
+  const showEventDetailsModal = (event) => {
     dispatch(
       toggleEventDetailsModal({
-        eventDetailsModalMisible: true,
+        event: event,
+        eventDetailsModalVisible: true,
         trigger: "Dispatching showEventDetailsModal"
       })
     );

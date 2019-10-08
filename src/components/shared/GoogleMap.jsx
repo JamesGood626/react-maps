@@ -46,17 +46,22 @@ export default function GoogleMap({ center, list, handleOpenModal }) {
     // so that you may update the currentlyViewedEvent in redux state with data from
     // an API request to fetch the event + comments so that it may be accessible
     // from the modal that displayed an Event's details.
-    <Pin lat={lat} lng={lng} onClick={() => handleOpenModal()} />
+    <Pin lat={lat} lng={lng} onClick={() => handleOpenModal(event)} />
   );
-
-  const markers = list.events.map(event => {
-    const coords = event.location.coordinates
-    const lat = coords[0]
-    const lng = coords[1]
-    return (
-      <MapPin lat={lat} lng={lng} event={event} />
-    )
-  })
+  const events = list.events
+  let markers = []
+  if (events !== undefined){
+    markers = events.map(event => {
+      const coords = event.location.coordinates
+      const lat = coords[0]
+      const lng = coords[1]
+      return (
+        <MapPin lat={lat} lng={lng} event={event} />
+      )
+    })
+  }
+    
+  
 
   // const defaultProps = {
   //     center: {

@@ -22,6 +22,7 @@ export default function modalReducer(
   if (type === TOGGLE_EVENT_DETAILS_MODAL)
     return {
       ...modalState,
+      event: payload.event,
       eventDetailsModalVisible: payload.eventDetailsModalVisible
     };
   return modalState;

@@ -56,10 +56,10 @@ console.log("the future created date: ", date);
 
 const initialEventDataState = {
   name: "Birthday Bash",
-  street: "1234 E Maryville Ln",
-  city: "Seattle",
-  state: "WA",
-  zip: "40219",
+  street: "630 9th Ave Suite",
+  city: "New York",
+  state: "NY",
+  zip: "10036",
   eventDate: date,
   comment: "It''ll be great fun"
 };
