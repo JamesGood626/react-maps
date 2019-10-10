@@ -30,14 +30,54 @@ const FormContainer = styled.section`
   max-height: 30rem;
   overflow-y: scroll;
 
-  form {
-    background: #fcfcfc;
+  #event-details-container {
+    padding-left: 0;
   }
 
   #close-btn {
     position: absolute;
     top: 0.6rem;
     right: 0.6rem;
+  }
+
+  #event-header {
+    h2 {
+        font-size: 2rem;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: -1rem;
+  }
+
+  #event-address {
+    color: #fcfcfc;
+    background: #02C39A;
+    padding: 1rem 1rem;
+
+      p {
+          margin-top: 0;
+          font-size: 1.2rem;
+      }
+
+      div {
+          font-size: 1.1rem;
+      }
+  }
+
+  #event-comment-list {
+      margin-top: 1rem;
+      padding: 0;
+  }
+
+  .event-comment {
+    list-style-type: none;
+    width: 50%;
+    border: 2px solid #222;
+    padding: 0.8rem;
+    text-wrap: wrap;
   }
 `;
 
@@ -95,24 +135,59 @@ export default function EventDetailModal({
 //     createEvent(eventData);
 //   };
 
+  const formatHumanReadableDate = (date) => `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+
+  const showEventIfExists = (event) => {
+      console.log("DOES THE EVENT EXIST? ", event)
+    if (event !== undefined){
+        if (Object.keys(event).length > 0) {
+            return event
+        }
+        else {
+            return null
+        }
+
+    }else {
+        return null
+    }
+  }
+
   const showHideClassname = eventDetailsModalVisible
     ? "display-block"
     : "display-none";
 
-    let comments = []
-    if (event !== undefined){
-        comments = event.comments.map(comment => {
-            return(
-                <li>{comment.text}</li>
-            )
-        })
-    }
+    let modal = []
+        modal = (event) => {
+            return showEventIfExists(event) === null ? null : (
+                    <>
+                        <div id="event-header">
+                            <h2>{event.name}</h2>
+                            <div>{formatHumanReadableDate(date)}</div>
+                        </div>
+                        <div id="event-address">
+                            <p>Come Join Us At!</p>
+                            <div >{event.address.street}, {event.address.city}, {event.address.state}, {event.address.zip}</div>
+                        </div>
+                        <ul id="event-comment-list">
+                        {
+                        event.comments.map(comment => {
+                            return(
+                                <li className="event-comment">{comment.text}</li>
+                            )
+                        })}
+                        </ul>
+                    </>
+                )
+           
+        }
+    
+    
 
   return (
     <>
       <ModalBackground className={showHideClassname} />
       <FormContainer className={showHideClassname}>
-        <form>
+        <div id="event-details-container">
           {/* <TextArea
             label="Comment:"
             name="comment"
@@ -120,13 +195,8 @@ export default function EventDetailModal({
             // value={eventData.comment}
             // updateField={updateEventData}
           /> */}
-            <div>Event Name: {event.name}</div>
-            <div>Event Date: {event.eventDate}</div>
-            <div>Address: {event.address.street}, {event.address.city}, {event.address.state}, {event.address.zip}</div>
-            <div>Comments: 
-                {comments}
-            </div>
-        </form>
+            {modal(event)}
+        </div>
         <button id="close-btn" onClick={hideEventDetailsModal}>
           Close
         </button>
